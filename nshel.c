@@ -308,14 +308,14 @@ int getArgs(char* arg, char* argv[]) {
 	strcpy(tmp, arg);
 	for (argc = 1; argc < ARG_MAX; argc++) {
 		result = sscanf(tmp, "%s %[^\n]", buf, tmp);
-		if (result == 0) break;
+		if (result <= 0) break;
 		else if (result == 1) {
 			argv[argc] = malloc(sizeof(char) * (strlen(buf) + 1));
 			strcpy(argv[argc], buf);
 			argc += 1;
 			if (argc < ARG_MAX) {
 				result = sscanf(tmp, "%s %[^\n]", buf, tmp);
-				if (result == 0) break;
+				if (result <= 0) break;
 				argv[argc] = malloc(sizeof(char) * (strlen(buf) + 1));
 				strcpy(argv[argc], buf);
 			}
