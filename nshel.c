@@ -346,6 +346,7 @@ void console() {
 	while (1) {
 		print("%d >>> ", lines);
 		scan(buf);
+		if (strlen(buf) == 0) continue;
 		result = execute(buf);
 		if (result == ERR) {
 			print("\nNSHEL running error!\n");
@@ -400,6 +401,7 @@ char* read(char* path) {
 			length += 1;
 		}
 	}
+	fclose(f);
 	data[length] = '\0';
 	return data;
 }
