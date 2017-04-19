@@ -374,6 +374,7 @@ void run(char* var) {
 			return;
 		} else free(_gcvar);
 	free(var);
+	
 	print("\nNSHEL running finished.\n\n");
 }
 
