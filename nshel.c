@@ -337,7 +337,9 @@ int execute(char* var) {
 	argv[0] = malloc(sizeof(char) * (strlen(head) + 1));
 	strcpy(argv[0], head);
 	argc = getArgs(arg, argv);
-	return funList[index].fun(argc, argv);
+	int result = funList[index].fun(argc, argv);
+	for (int i = 0; i < argc; i++) free(argv[i]);
+	return result;
 }
 
 void console() {
@@ -359,16 +361,19 @@ void console() {
 
 void run(char* var) {
 	if (var == 0) return;
+	char* _gcvar = 0;
 	
 	int varLines = lines(var);
 	print("NSHEL: %d line(s), running...\n", varLines);
 	for (int i = 0; i < varLines; i++)
-		if (execute(line(var, i))) {
+		if (execute(_gcvar = line(var, i))) {
+			free(_gcvar);
 			print("\nNSHEL running error!\n");
-			print("At line %d: %s\n\n", i, line(var, i));
+			print("At line %d: %s\n\n", i, _gcvar = line(var, i));
+			free(_gcvar);
 			return;
-		}
-	
+		} else free(_gcvar);
+	free(var);
 	print("\nNSHEL running finished.\n\n");
 }
 
